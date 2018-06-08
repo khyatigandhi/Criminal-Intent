@@ -19,4 +19,12 @@ public class CrimeListFragment extends Fragment {
         return  view;
     }
 
+    private class CrimeHolder extends RecyclerView.ViewHolder{
+        public CrimeHolder(LayoutInflater inflater , ViewGroup parent){
+            super(inflater.inflate(R.layout.list_item_crime,parent,false));
+
+        }
+    }
+
+
 }
