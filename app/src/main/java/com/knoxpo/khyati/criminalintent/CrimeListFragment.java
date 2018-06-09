@@ -67,7 +67,9 @@ public class CrimeListFragment extends Fragment {
         public SeriousCrime(View itemView) {
             super(itemView);
             mCallButton = itemView.findViewById(R.id.btn_dial);
+            mCallButton.setOnClickListener(this);
             mCameraButton = itemView.findViewById(R.id.btn_camera);
+            mCameraButton.setOnClickListener(this);
 
             }
         public void onClick(View view)
@@ -81,8 +83,8 @@ public class CrimeListFragment extends Fragment {
                     break;
                 case R.id.btn_camera:
                     //open camera;
-                     callIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                     startActivity(callIntent);
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                     startActivity(cameraIntent);
                 default:super.onClick(view);
             }
 
@@ -123,6 +125,15 @@ public class CrimeListFragment extends Fragment {
         public void onBindViewHolder(@NonNull CrimeHolder holder, int position) {
             Crime crime = mCrimes.get(position);
             holder.bind(crime);
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            Crime crime = mCrimes.get(position);
+            if (crime.isSeriousCrime()) {
+                return TYPE_SERIOUS_CRIME;
+            }
+            return TYPE_NORMAL_CRIME;
         }
 
         @Override
