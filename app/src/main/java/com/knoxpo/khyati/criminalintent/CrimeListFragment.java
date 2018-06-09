@@ -1,7 +1,9 @@
 package com.knoxpo.khyati.criminalintent;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,12 +41,13 @@ public class CrimeListFragment extends Fragment {
         private Crime mCrime;
         private TextView mTitleTextView;
         private TextView mDateTextView;
-        public CrimeHolder(LayoutInflater inflater , ViewGroup parent)
+        public CrimeHolder(View itemView)
         {
-            super(inflater.inflate(R.layout.list_item_crime,parent,false));
+            super(itemView);
             itemView.setOnClickListener(this);
             mTitleTextView = itemView.findViewById(R.id.crime_title);
             mDateTextView = itemView.findViewById(R.id.crime_date);
+            itemView.setOnClickListener(this);
         }
         public void bind(Crime crime)
         {
@@ -57,9 +61,42 @@ public class CrimeListFragment extends Fragment {
             Toast.makeText(getActivity(),mCrime.getTitle()+"clicked !", Toast.LENGTH_SHORT).show();
         }
     }
+    private class SeriousCrime extends CrimeHolder{
+        private Button mCallButton;
+        private Button mCameraButton;
+        public SeriousCrime(View itemView) {
+            super(itemView);
+            mCallButton = itemView.findViewById(R.id.btn_dial);
+            mCameraButton = itemView.findViewById(R.id.btn_camera);
+
+            }
+        public void onClick(View view)
+        {
+            switch (view.getId())
+            {
+                case R.id.btn_dial:
+                    //make call;
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:9104088322"));
+                    startActivity(callIntent);
+                    break;
+                case R.id.btn_camera:
+                    //open camera;
+                     callIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                     startActivity(callIntent);
+                default:super.onClick(view);
+            }
+
+        }
+    }
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>
     {
+        private static final int
+                TYPE_NORMAL_CRIME = 0,
+                TYPE_SERIOUS_CRIME = 1;
+
+
         private List<Crime> mCrimes;
+
         public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
         }
@@ -68,7 +105,18 @@ public class CrimeListFragment extends Fragment {
         @Override
         public CrimeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            return new CrimeHolder(layoutInflater,parent);
+
+            switch (viewType) {
+                case TYPE_NORMAL_CRIME:
+                    View normalView = layoutInflater.inflate(R.layout.list_item_crime, parent, false);
+                    return new CrimeHolder(normalView);
+                case TYPE_SERIOUS_CRIME:
+                    View seriousView = layoutInflater.inflate(R.layout.list_item_serious_crime, parent, false);
+                    return new SeriousCrime(seriousView);
+                default:
+                    throw new RuntimeException("Not a valid view type: " + viewType);
+            }
+
         }
 
         @Override
