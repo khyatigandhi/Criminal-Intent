@@ -15,10 +15,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Crime Title"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/crime_solved"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/crime_date"
