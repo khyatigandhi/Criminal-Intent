@@ -1,9 +1,10 @@
 package com.knoxpo.khyati.criminalintent;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class Crime {
+public class Crime  {
     private UUID mId;
     private String mTitle;
     private Date mDate;
