@@ -23,6 +23,7 @@ public class CrimeFragment extends Fragment {
 
     public static final String ARG_CRIME_ID = "crime_id";
     public static final String DIALOG_DATE = "DialogDate";
+    private static final int REQUEST_DATE = 0;
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -73,7 +74,8 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
-                DatePickerFragment dialog = new DatePickerFragment();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this,REQUEST_DATE);
                 dialog.show(manager,DIALOG_DATE);
             }
         });
