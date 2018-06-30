@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +25,11 @@ import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
 
+
     public static final String ARG_CRIME_ID = "crime_id";
     public static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
+    private static final String TAG ="cri" ;
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -93,11 +96,12 @@ public class CrimeFragment extends Fragment {
         return v;
     }
     public void onActivityResult(int requestcode, int resultcode ,Intent data ){
-        if(requestcode!= Activity.RESULT_OK){
+        if(resultcode!= Activity.RESULT_OK){
             return;
         }
         if(requestcode==REQUEST_DATE){
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            Log.i(TAG,date.toString()+"khyati");
             mCrime.setDate(date);
             updateDate();
         }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -18,8 +19,10 @@ import java.util.GregorianCalendar;
 
 public class DatePickerFragment extends DialogFragment {
 
+
     public static final String EXTRA_DATE = "date";
     public static final String ARG_DATE = "date";
+    private static final String TAG ="criminalIntentK" ;
     private DatePicker mDatePicker;
     public static DatePickerFragment newInstance(Date date){
         Bundle args = new Bundle();
@@ -56,6 +59,7 @@ public class DatePickerFragment extends DialogFragment {
                         int day = mDatePicker.getDayOfMonth();
                         Date date = new GregorianCalendar(year, month, day).getTime();
                         sendResult(Activity.RESULT_OK, date);
+                    //    Log.d(TAG,date.toString());
                     }
                 })
                 .create();
@@ -66,6 +70,7 @@ public class DatePickerFragment extends DialogFragment {
         }
         Intent intent = new Intent();
         intent.putExtra(EXTRA_DATE,date);
+        Log.d(TAG,date.toString());
         getTargetFragment().onActivityResult(getTargetRequestCode(),resultcode,intent);
     }
 }
