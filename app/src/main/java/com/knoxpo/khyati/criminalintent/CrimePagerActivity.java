@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +23,11 @@ public class CrimePagerActivity extends AppCompatActivity {
         Intent intent = new Intent(packageContext,CrimePagerActivity.class);
         intent.putExtra(EXTRA_CRIME_ID,crimeId);
         return intent;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
